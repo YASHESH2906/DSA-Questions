@@ -1,0 +1,111 @@
+import java.util.Scanner;
+
+class Node 
+{
+    int key;
+    Node left, right;
+    Node(int key) 
+    {
+        this.key = key;
+        left = right = null;
+    }
+}
+
+public class BinaryTree 
+{
+    Node root;
+
+    public Node insertNode(Node root, int key) 
+    {
+        if (root == null) 
+        {
+            return new Node(key);
+        }
+        if (key < root.key) 
+        {
+            root.left = insertNode(root.left, key);
+        } 
+        else if (key > root.key) 
+        {
+            root.right = insertNode(root.right, key);
+        }
+        return root;
+    }
+
+    public void preorder(Node node) 
+    {
+        if (node == null) return;
+        System.out.print(node.key + " ");
+        preorder(node.left);
+        preorder(node.right);
+    }
+
+    public void inorder(Node node) 
+    {
+        if (node == null) return;
+        inorder(node.left);
+        System.out.print(node.key + " ");
+        inorder(node.right);
+    }
+
+    public void postorder(Node node) 
+    {
+        if (node == null) return;
+        postorder(node.left);
+        postorder(node.right);
+        System.out.print(node.key + " ");
+    }
+
+    public boolean search(Node node, int key) 
+    {
+        if (node == null) return false;
+        if (node.key == key) return true;
+        return search(node.left, key) || search(node.right, key);
+    }
+
+    public static void main(String[] args) 
+    {
+        BinaryTree tree = new BinaryTree();
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Enter number of nodes:");
+        int n = sc.nextInt();
+
+        System.out.println("Enter node values:");
+        for (int i = 0; i < n; i++) 
+        {
+            int key = sc.nextInt();
+            tree.root = tree.insertNode(tree.root, key);
+        }
+
+        System.out.println("Pre-order traversal:");
+        tree.preorder(tree.root);
+        System.out.println();
+
+        System.out.println("In-order traversal:");
+        tree.inorder(tree.root);
+        System.out.println();
+
+        System.out.println("Post-order traversal:");
+        tree.postorder(tree.root);
+        System.out.println();
+
+        System.out.println("Enter key to search:");
+        int keyToSearch = sc.nextInt();
+        boolean found = tree.search(tree.root, keyToSearch);
+        if (found) 
+        {
+            System.out.println("Key " + keyToSearch + " found in the tree.");
+        } 
+        else 
+        {
+            System.out.println("Key " + keyToSearch + " not found in the tree.");
+        }
+
+        sc.close();
+    }
+}
+
+
+
+
